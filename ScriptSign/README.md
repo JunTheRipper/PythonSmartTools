@@ -14,3 +14,7 @@ XMU每日打卡系统， 对应打卡网址：[http://xmuxg.xmu.edu.cn/xmu/app/2
 Python库： selenium   wxPython   time    os   sys
 
 3. ScriptSign.exe是相关封装后的文件
+
+4.请注意，对应的webdriver需要和您的谷歌浏览器版本匹配，否则会报错，这里的chromedriver对应83版本，同时FastSpy的path的需要写上自己的安装路径
+
+Please note that the corresponding webdriver needs to match your Google browser version, otherwise an error will be reported. The chrome driver here corresponds to version 83, and the Fastspy.py path needs to write its own installation path

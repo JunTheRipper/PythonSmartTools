@@ -69,7 +69,7 @@ class Login_Spyder:
 
 
 if __name__ =='__main__':
-    filename = 'signame.log'  # 文件存储日志
+    filename = '../signame.log'  # 文件存储日志
     path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     search = input("显示打卡界面？Y/N\n")
