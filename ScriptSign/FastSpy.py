@@ -69,7 +69,7 @@ class Login_Spyder:
 
 
 if __name__ =='__main__':
-    filename = '../signame.log'  # 文件存储日志
+    filename = 'signame.log'  # 文件存储日志
     path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     search = input("显示打卡界面？Y/N\n")
@@ -85,15 +85,15 @@ if __name__ =='__main__':
             password = a[1]
         file.close()
     else:
-        r = input("请输入您的用户名和密码：")
+        r = input("请输入您的用户名和密码(写一行，空格隔开)：")
         a = r.split(" ")
         username, password = a[0], a[1]
         with open(filename, 'w+') as f:
             f.write(r)
 
     try:
-        browser = Login_Spyder(url, username, password, path, chrome_opt)
-        browser.first_log()
-        browser.operator()
+        browserObj = Login_Spyder(url, username, password, path, chrome_opt)
+        browserObj.first_log()
+        browserObj.operator()
     except Exception as e:
         print(str(e),e.with_traceback(), "打卡异常！")
