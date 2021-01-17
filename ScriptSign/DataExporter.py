@@ -1,9 +1,9 @@
-# 爬虫系统，实现自动化打卡技术
+# DataExporter 辅导员打卡数据文档自动导出
 from selenium import webdriver
 import time
 import os
 import sys
-class Login_Spyder:
+class DataExportder:
     def __init__(self, url, username, password, path, chrome_option):
         self.username = username
         self.url = url
@@ -15,7 +15,7 @@ class Login_Spyder:
             self.browser = webdriver.Chrome(options=chrome_option, executable_path=path)
 
     def first_log(self):
-        time.sleep(2)  # 给予浏览器时间响应
+        time.sleep(2)    # 给予浏览器时间响应
         self.browser.get(self.url)
         self.browser.implicitly_wait(8)
         login = self.browser.find_elements_by_xpath('//*[@class="btn primary-btn"]')[1]
@@ -29,45 +29,27 @@ class Login_Spyder:
         sign.click()
         time.sleep(3)
         self.browser.switch_to.window(self.browser.window_handles[1])
+        # 跳转到第二个窗口
 
     def operator(self):
         self.browser.implicitly_wait(8)
-        first = self.browser.find_element_by_xpath('//*[@title="我的表单"]')
+        first = self.browser.find_element_by_xpath('//*[@title="辅导员"]')
         first.click()
-        action = webdriver.ActionChains(self.browser)
         time.sleep(1)
-        a = self.browser.find_elements_by_xpath('//*[@data-name="select_1582538939790"]')
-        item = a[0]
-        js = "var q=document.getElementsByClassName('container-fluid')[1].scrollTop=10000"
-        self.browser.execute_script(js)  # 滑动到最底端
+        logout = self.browser.find_element_by_xpath('//*[@class="pull-right operation-group export"]')
+        logout.click()
         time.sleep(1)
-        action.move_to_element(item).perform()
-        if item.text[:3] != "请选择":
-            print("您已打卡！")
+        excel = self.browser.find_elements_by_xpath('//*[@class="btn blockBtn"]')
+        excel[1].click()
+        time.sleep(1)
+        confirm = self.browser.find_elements_by_xpath('//*[@class="btn submit-btn clearBtnBorder"]')
+        confirm[1].click()
 
-        else:
-            action.click().perform()  # 移动到对应位置并点击，弹出“是”的对话栏
-            # with open('1.html', "w", encoding='utf-8') as filr:
-            #     filr.write(self.browser.page_source)
-            class_menu = self.browser.find_elements_by_xpath('//li[contains(@class,"dropdown-items")]')
-            if class_menu == []:
-                print("您未在打卡时间内")
-                self.browser.quit()
 
-            else:
-                its = class_menu[0]
-                its.click()
-                self.browser.find_element_by_xpath('//*[@class="form-save position-absolute"]').click()
-                alert = self.browser.switch_to.alert
-
-                alert.accept()
-                self.browser.quit()
-                print("打卡成功！")
-                sys.exit()
 
 
 if __name__ =='__main__':
-    filename = 'signame.log'  # 文件存储日志
+    filename = 'admin.log'  # 文件存储日志
     path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     search = input("显示打卡界面？Y/N\n")
@@ -90,8 +72,9 @@ if __name__ =='__main__':
             f.write(r)
 
     try:
-        browserObj = Login_Spyder(url, username, password, path, chrome_opt)
+        browserObj = DataExportder(url, username, password, path, chrome_opt)
         browserObj.first_log()
         browserObj.operator()
+        print('获取excel文件成功！')
     except Exception as e:
         print(str(e), "打卡异常！")
