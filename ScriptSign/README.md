@@ -21,5 +21,6 @@ Python库： selenium   wxPython   time    os   sys
 
 Please note that the corresponding webdriver needs to match your Google browser version, otherwise an error will be reported. The chrome driver here corresponds to version 83, and the Fastspy.py path needs to write its own installation path
 
-5. 默认情况下，账号密码日志文件在当前工作目录下,名称为 signame.log
+5. 默认情况下，账号密码日志文件在当前工作目录下,名称为 signame.log；辅导员/管理员的账号信息存储在工作目录的"admin.log"日志文件中
 
+6. 导出的时候会下载相关的EXCEL文件，这里的路径是在"C:\Users\admin\Downloads"下面，具体请根据自己下载路径改

@@ -2,6 +2,8 @@
 from selenium import webdriver
 import time
 import os
+import re
+import datetime
 import sys
 class DataExportder:
     def __init__(self, url, username, password, path, chrome_option):
@@ -45,9 +47,6 @@ class DataExportder:
         confirm = self.browser.find_elements_by_xpath('//*[@class="btn submit-btn clearBtnBorder"]')
         confirm[1].click()
 
-
-
-
 if __name__ =='__main__':
     filename = 'admin.log'  # 文件存储日志
     path = r"F:\google_webdriver\chromedriver.exe"
@@ -78,3 +77,22 @@ if __name__ =='__main__':
         print('获取excel文件成功！')
     except Exception as e:
         print(str(e), "打卡异常！")
+
+    # 转换器： 功能：excel重命名+直接打开
+
+    target = r'\w*\.xlsx'
+    now_time = datetime.datetime.now()
+    string_date = now_time.strftime("%m") + now_time.strftime("%d") + ".xlsx"
+    os.chdir(r'C:\Users\admin\Downloads')  # 这是我的默认下载路径
+    file_details = os.listdir(os.getcwd())
+    flag = None
+
+    for item in file_details:
+        if re.search(target, item) != None:
+            flag = item
+            print(item)
+            break
+
+    if flag != None:
+        os.rename(flag, string_date)
+        os.system(string_date)
