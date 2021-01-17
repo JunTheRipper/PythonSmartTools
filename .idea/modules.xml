@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/WebSpyder.iml" filepath="$PROJECT_DIR$/.idea/WebSpyder.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/PythonSmartTools.iml" filepath="$PROJECT_DIR$/.idea/PythonSmartTools.iml" />
     </modules>
   </component>
 </project>

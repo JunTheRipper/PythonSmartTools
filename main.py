@@ -155,14 +155,5 @@ class MyFrame(wx.Frame):
             if TvalueChoice[i] == self.nameValue.GetValue():
                 self.passValue.SetValue(PvalueChoice[i])
 
-
-    # def Onclickhighersearch(self,event):
-    #     pass
 if __name__ =='__main__':
-    app = wx.App()
-    frame = MyFrame(parent=None, id=-1)
-    #frame.Bind(wx.EVT_CLOSE,frame.OnclickExit)#对象中绑定关闭系统
-    frame.SetMaxSize(wx.Size(680, 650))
-    frame.Center()
-    frame.Show()
-    app.MainLoop()
+    pass
