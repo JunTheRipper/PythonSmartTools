@@ -71,6 +71,7 @@ if __name__ =='__main__':
     path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     search = input("显示打卡界面？Y/N\n")
+    print("Please wait for seconds ...... ")
     chrome_opt = None
     username, password = None, None
     if search.__eq__('N') or search.__eq__('n'):

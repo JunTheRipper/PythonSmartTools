@@ -48,10 +48,14 @@ class DataExportder:
         confirm[1].click()
 
 if __name__ =='__main__':
+
     filename = 'admin.log'  # 文件存储日志
     path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
+    download_location = r'C:\Users\admin\Downloads'
+
     search = input("显示打卡界面？Y/N\n")
+    print("Please wait for seconds ...... ")
     chrome_opt = None
     username, password = None, None
     if search.__eq__('N') or search.__eq__('n'):
@@ -70,6 +74,14 @@ if __name__ =='__main__':
         with open(filename, 'w+') as f:
             f.write(r)
 
+    now_time = datetime.datetime.now()
+    string_date = now_time.strftime("%m") + now_time.strftime("%d") + ".xlsx"
+
+    os.chdir(download_location)  # 这是我的默认下载路径,修正工作路径
+
+    if os.path.exists(string_date):
+        os.remove(string_date)  # 由于当日打卡数据更新，事先删除当日已经存储的打卡.xlsx 文件
+
     try:
         browserObj = DataExportder(url, username, password, path, chrome_opt)
         browserObj.first_log()
@@ -78,16 +90,13 @@ if __name__ =='__main__':
     except Exception as e:
         print(str(e), "打卡异常！")
 
+    time.sleep(5)
     # 转换器： 功能：excel重命名+直接打开
 
-    target = r'\w*\.xlsx'
-    now_time = datetime.datetime.now()
-    string_date = now_time.strftime("%m") + now_time.strftime("%d") + ".xlsx"
-    os.chdir(r'C:\Users\admin\Downloads')  # 这是我的默认下载路径
-    file_details = os.listdir(os.getcwd())
+    target = r'Daily Health Report (\w*)\.xlsx'
     flag = None
 
-    for item in file_details:
+    for item in os.listdir(os.getcwd()):
         if re.search(target, item) != None:
             flag = item
             print(item)
