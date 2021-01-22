@@ -3,13 +3,15 @@ from selenium import webdriver
 import time
 import os
 import sys
+
+
 class Login_Spyder:
     def __init__(self, url, username, password, path, chrome_option):
         self.username = username
         self.url = url
         self.password = password
         self.chrome_option = chrome_option
-        if chrome_option == None:
+        if chrome_option is None:
             self.browser = webdriver.Chrome(executable_path=path)
         else:
             self.browser = webdriver.Chrome(options=chrome_option, executable_path=path)
@@ -36,10 +38,10 @@ class Login_Spyder:
         first.click()
         action = webdriver.ActionChains(self.browser)
         time.sleep(1)
-        a = self.browser.find_elements_by_xpath('//*[@data-name="select_1582538939790"]')
-        item = a[0]
+
         js = "var q=document.getElementsByClassName('container-fluid')[1].scrollTop=10000"
         self.browser.execute_script(js)  # 滑动到最底端
+        item = self.browser.find_elements_by_xpath('//*[@data-name="select_1582538939790"]')[0]
         time.sleep(1)
         action.move_to_element(item).perform()
         if item.text[:3] != "请选择":
@@ -57,20 +59,39 @@ class Login_Spyder:
             else:
                 its = class_menu[0]
                 its.click()
+
+                # # =============== 新增项目 =================
+                # # 国内 城市 地址 三个节点比较接近，不需要拉滚动条
+                # target_abroad = self.browser.find_elements_by_xpath('//*[@data-name="select_1611107962967"]')[0]
+                # self.browser.execute_script("arguments[0].scrollIntoView();", target_abroad)  # 滑动到目标位置
+                # action.move_to_element(target_abroad).perform()
+                # abroad_denied = self.browser.find_element_by_xpath('//*[@title="国内"]')
+                # abroad_denied.click()
+                # self.browser.implicitly_wait(8)
+                #
+                # self.browser.find_elements_by_xpath('//*[@class="form-control info-value"]')[3].send_keys()
+                #
+                # target_school = self.browser.find_elements_by_xpath('//*[@data-name="select_1611108284522"]')[0]
+                # self.browser.execute_script("arguments[0].scrollIntoView();", target_school)  # 滑动到目标位置
+                # action.move_to_element(target_school).perform()
+                # school_denied = self.browser.find_element_by_xpath('//*[@title="不在校"]')
+                # school_denied.click()
+                # self.browser.implicitly_wait(8)
+                # # =============== 新增项目 =================
+
                 self.browser.find_element_by_xpath('//*[@class="form-save position-absolute"]').click()
                 alert = self.browser.switch_to.alert
-
                 alert.accept()
                 self.browser.quit()
                 print("打卡成功！")
                 sys.exit()
 
 
-if __name__ =='__main__':
+if __name__ == '__main__':
     filename = 'signame.log'  # 文件存储日志
-    path = r"F:\google_webdriver\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     search = input("显示打卡界面？Y/N\n")
+    path = r'F:\webdrivers\chromedriver.exe'
     print("Please wait for seconds ...... ")
     chrome_opt = None
     username, password = None, None
@@ -95,4 +116,5 @@ if __name__ =='__main__':
         browserObj.first_log()
         browserObj.operator()
     except Exception as e:
+        e.with_traceback()
         print(str(e), "打卡异常！")

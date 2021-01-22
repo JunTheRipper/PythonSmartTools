@@ -5,19 +5,21 @@ import os
 import re
 import datetime
 import sys
+
+
 class DataExportder:
     def __init__(self, url, username, password, path, chrome_option):
         self.username = username
         self.url = url
         self.password = password
         self.chrome_option = chrome_option
-        if chrome_option == None:
+        if chrome_option is None:
             self.browser = webdriver.Chrome(executable_path=path)
         else:
             self.browser = webdriver.Chrome(options=chrome_option, executable_path=path)
 
     def first_log(self):
-        time.sleep(2)    # 给予浏览器时间响应
+        time.sleep(2)  # 给予浏览器时间响应
         self.browser.get(self.url)
         self.browser.implicitly_wait(8)
         login = self.browser.find_elements_by_xpath('//*[@class="btn primary-btn"]')[1]
@@ -47,10 +49,11 @@ class DataExportder:
         confirm = self.browser.find_elements_by_xpath('//*[@class="btn submit-btn clearBtnBorder"]')
         confirm[1].click()
 
-if __name__ =='__main__':
+
+if __name__ == '__main__':
 
     filename = 'admin.log'  # 文件存储日志
-    path = r"F:\google_webdriver\chromedriver.exe"
+    path = r"F:\webdrivers\chromedriver.exe"
     url = 'http://xmuxg.xmu.edu.cn/xmu/app/214'
     download_location = r'C:\Users\admin\Downloads'
 
@@ -97,11 +100,11 @@ if __name__ =='__main__':
     flag = None
 
     for item in os.listdir(os.getcwd()):
-        if re.search(target, item) != None:
+        if re.search(target, item) is not None:
             flag = item
             print(item)
             break
 
-    if flag != None:
+    if flag is not None:
         os.rename(flag, string_date)
         os.system(string_date)
