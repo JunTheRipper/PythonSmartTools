@@ -19,6 +19,7 @@ class Login_Spyder:
     def first_log(self):
         time.sleep(2)  # 给予浏览器时间响应
         self.browser.get(self.url)
+        self.browser.maximize_window()
         self.browser.implicitly_wait(8)
         login = self.browser.find_elements_by_xpath('//*[@class="btn primary-btn"]')[1]
         login.click()
@@ -38,11 +39,11 @@ class Login_Spyder:
         first.click()
         action = webdriver.ActionChains(self.browser)
         time.sleep(1)
-
-        js = "var q=document.getElementsByClassName('container-fluid')[1].scrollTop=10000"
-        self.browser.execute_script(js)  # 滑动到最底端
+        # js = "var q=document.getElementsByClassName('container-fluid')[1].scrollTop=300"
+        # self.browser.execute_script(js)  # 滑动到最底端
         item = self.browser.find_elements_by_xpath('//*[@data-name="select_1582538939790"]')[0]
         time.sleep(1)
+        self.browser.execute_script('arguments[0].scrollIntoView();', item)
         action.move_to_element(item).perform()
         if item.text[:3] != "请选择":
             print("您已打卡！")
@@ -59,7 +60,6 @@ class Login_Spyder:
             else:
                 its = class_menu[0]
                 its.click()
-
                 # # =============== 新增项目 =================
                 # # 国内 城市 地址 三个节点比较接近，不需要拉滚动条
                 # target_abroad = self.browser.find_elements_by_xpath('//*[@data-name="select_1611107962967"]')[0]
