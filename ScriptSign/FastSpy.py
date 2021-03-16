@@ -45,8 +45,11 @@ class Login_Spyder:
         time.sleep(1)
         self.browser.execute_script('arguments[0].scrollIntoView();', item)
         action.move_to_element(item).perform()
+        spy_date = self.browser.find_element_by_xpath('//*[@data-name="datetime_1611146487222"]')
         if item.text[:3] != "请选择":
-            print("您已打卡！")
+            print("您已打卡！上一次打卡时间： " ,end='')
+            print(spy_date.text)
+            self.browser.quit()
 
         else:
             action.click().perform()  # 移动到对应位置并点击，弹出“是”的对话栏
@@ -54,7 +57,8 @@ class Login_Spyder:
             #     filr.write(self.browser.page_source)
             class_menu = self.browser.find_elements_by_xpath('//li[contains(@class,"dropdown-items")]')
             if class_menu == []:
-                print("您未在打卡时间内")
+                print("您未在打卡时间内,上一次打卡时间： ", end="")
+                print(spy_date.text)
                 self.browser.quit()
 
             else:
@@ -82,8 +86,12 @@ class Login_Spyder:
                 self.browser.find_element_by_xpath('//*[@class="form-save position-absolute"]').click()
                 alert = self.browser.switch_to.alert
                 alert.accept()
+                time.sleep(1)
+
                 self.browser.quit()
                 print("打卡成功！")
+                spy_date = self.browser.find_elements_by_xpath('//*[@data-name="datetime_1611146487222"]')[1]
+                print("您的打卡时间：", spy_date.text)
                 sys.exit()
 
 
